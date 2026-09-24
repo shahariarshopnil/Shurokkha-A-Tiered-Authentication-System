@@ -1,0 +1,13 @@
+{
+  "name": "shurokkha-prototype",
+  "version": "2.0.0",
+  "description": "Shurokkha — phishing-resistant, connectivity-aware authentication prototype (BRAC University CSE thesis)",
+  "private": true,
+  "scripts": {
+    "start": "npx --yes http-server . -a localhost -p 8080 -c-1 -o",
+    "test": "node tests/run.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.1.0"
+  }
+}

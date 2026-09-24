@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="bn" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Shurokkha — authentication prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path d="M12 2 4 5v6c0 5 3.4 9.4 8 11 4.6-1.6 8-6 8-11V5l-8-3Z" fill="currentColor"/></svg>
+    <b>Shurokkha</b><span>সুরক্ষা</span><i>authentication prototype</i>
+  </div>
+  <div class="ctl"><span>mode</span>
+    <div class="seg mode" id="modeSeg">
+      <button data-mode="shurokkha" aria-pressed="true">Shurokkha</button>
+      <button data-mode="legacy" aria-pressed="false">Legacy · SMS OTP</button>
+    </div>
+  </div>
+  <div class="ctl"><span>My Device network</span>
+    <div class="seg" id="netSeg">
+      <button data-net="good" aria-pressed="true">Good</button>
+      <button data-net="poor" aria-pressed="false">Poor</button>
+      <button data-net="none" aria-pressed="false">None</button>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <main class="stage">
+    <div class="dev">
+      <div class="dev-cap"><span class="net-dot" id="dotMy"></span><b>My Device</b><em id="capMy"></em></div>
+      <div class="frame"><div class="screen"><div class="host" id="host-my"></div><div class="layer" id="layer-my"></div></div></div>
+    </div>
+    <div class="dev">
+      <div class="dev-cap"><span class="net-dot"></span><b>SafePay</b><em id="capSp"></em></div>
+      <div class="frame tab"><div class="screen"><div class="host" id="host-sp"></div><div class="layer" id="layer-sp"></div></div></div>
+    </div>
+    <div class="dev">
+      <div class="dev-cap"><span class="net-dot"></span><b>Second Device</b><em id="capSec"></em></div>
+      <div class="frame"><div class="screen"><div class="host" id="host-sec"></div><div class="layer" id="layer-sec"></div></div></div>
+    </div>
+  </main>
+
+  <aside class="rail">
+    <section class="sec"><h5>Risk inspector <b id="ctxName">idle</b></h5><div class="secb" id="inspector"></div></section>
+    <section class="sec"><h5>Scenarios</h5><div class="secb acts" id="acts"></div></section>
+    <section class="sec"><h5>Attacker console</h5><div class="secb"><div class="atk" id="atk"></div></div></section>
+    <section class="sec"><h5>Event log <b id="logCount">0</b></h5>
+      <div class="secb">
+        <div class="logbox" id="log"></div>
+        <div style="display:flex;gap:7px;margin-top:9px;flex-wrap:wrap">
+          <button class="chip" data-g="export">Show JSON</button>
+          <button class="chip" data-g="copy">Copy</button>
+          <button class="chip" data-g="reset">Reset demo</button>
+        </div>
+        <textarea class="txta" id="exportBox" style="display:none" readonly></textarea>
+      </div>
+    </section>
+    <section class="sec"><h5>Crypto in use</h5>
+      <div class="secb">
+        <div id="cryptoBadge"><span class="cryptobadge">checking…</span></div>
+        <p class="hint" style="margin-top:10px">Each linked app gets its own ECDSA P-256 keypair per device, private key generated non-extractable.
+        Every approval is a real signature, verified against the public key the app's server stored at link time.
+        Offline approvals use <code>HMAC-SHA1</code> over the challenge with RFC&nbsp;4226 truncation to 8 digits.</p>
+      </div>
+    </section>
+  </aside>
+</div>
+
+<script src="vendor/qrcode.js"></script>
+<script src="js/util.js"></script>
+<script src="js/state.js"></script>
+<script src="js/crypto.js"></script>
+<script src="js/risk-engine.js"></script>
+<script src="js/auth-flows.js"></script>
+<script src="js/ui-core.js"></script>
+<script src="js/screens-shurokkha.js"></script>
+<script src="js/screens-safepay.js"></script>
+<script src="js/ui-widgets.js"></script>
+<script src="js/actions-shurokkha.js"></script>
+<script src="js/actions-safepay.js"></script>
+<script src="js/harness.js"></script>
+</body>
+</html>
