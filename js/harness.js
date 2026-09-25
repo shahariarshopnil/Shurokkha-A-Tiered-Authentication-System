@@ -65,13 +65,13 @@ const K = {
    ================================================================== */
 function drawActs(){
   const c = [];
-  if (!S.acct.registered) c.push(['hint', 'Start on My Device: সাইন ইন → register Shurokkha.']);
-  else if (!S.sp.registered) c.push(['sp-reg', 'Register on SafePay']);
+  if (!S.acct.registered) c.push(['hint', t('Start on My Device: রেজিস্টার → register Shurokkha.', 'Start on My Device: Register → register Shurokkha.')]);
+  else if (!S.sp.registered) c.push(['sp-reg', t('Register on SafePay', 'Register on SafePay')]);
   else {
-    if (!S.sp.loggedIn) c.push(['sp-login', 'Log in to SafePay']);
-    else c.push(['bal','Check balance'], ['s1','Send ৳1,200 · saved'], ['s2','Send ৳12,000 · saved'], ['s3','Send ৳45,000 · new'],
-                ['add','Add ৳5,000'], ['chpin','Change SafePay PIN'], ['sess','SafePay sessions']);
-    c.push(['sec-in','Second device sign-in'], ['lost','Lost phone → recovery']);
+    if (!S.sp.loggedIn) c.push(['sp-login', t('Log in to SafePay', 'Log in to SafePay')]);
+    else c.push(['bal',t('Check balance','Check balance')], ['s1',t('Send ৳1,200 · saved','Send ৳1,200 · saved')], ['s2',t('Send ৳12,000 · saved','Send ৳12,000 · saved')], ['s3',t('Send ৳45,000 · new','Send ৳45,000 · new')],
+                ['add',t('Add ৳5,000','Add ৳5,000')], ['chpin',t('Change SafePay PIN','Change SafePay PIN')], ['sess',t('SafePay sessions','SafePay sessions')]);
+    c.push(['sec-in',t('Second device sign-in','Second device sign-in')], ['lost',t('Lost phone → recovery','Lost phone → recovery')]);
   }
   $('#acts').innerHTML = c.map(([k,l]) => k==='hint' ? `<p class="hint">${l}</p>` : `<button class="chip" data-s="${k}">${l}</button>`).join('');
 }
@@ -105,7 +105,8 @@ const G = {
   async copy(){ G.export(); try{ await navigator.clipboard.writeText($('#exportBox').value); const c = $('#logCount'), o = c.textContent; c.textContent = 'copied'; setTimeout(() => c.textContent = o, 1200); }catch(_){ $('#exportBox').select(); } },
   reset(){
     try{ localStorage.removeItem('shurokkha.log'); }catch(_){}
-    const wa = S.webauthn; Object.assign(S, fresh()); S.webauthn = wa;
+    const wa = S.webauthn, curLang = S.lang || 'bn'; Object.assign(S, fresh()); S.webauthn = wa; S.lang = curLang;
+    [...$('#langSeg').children].forEach(x => x.setAttribute('aria-pressed', x.dataset.lang===S.lang));
     [...$('#modeSeg').children].forEach(x => x.setAttribute('aria-pressed', x.dataset.mode==='shurokkha'));
     [...$('#netSeg').children].forEach(x => x.setAttribute('aria-pressed', x.dataset.net==='good'));
     ['layer-my','layer-sp','layer-sec'].forEach(id => document.getElementById(id).innerHTML = '');
@@ -116,6 +117,13 @@ const G = {
 
 /* ---------------- wiring ---------------- */
 document.addEventListener('click', e => {
+  const lg = e.target.closest('[data-lang]');
+  if (lg){
+    S.lang = lg.dataset.lang;
+    document.querySelectorAll('[data-lang]').forEach(x => x.setAttribute('aria-pressed', x.dataset.lang === S.lang));
+    log(`language → ${S.lang === 'en' ? 'English' : 'Bangla'}`);
+    render(); return;
+  }
   const t = e.target.closest('[data-shu],[data-sp],[data-k],[data-g],[data-s]');
   if (t && !t.disabled){
     if (t.dataset.shu !== undefined){
