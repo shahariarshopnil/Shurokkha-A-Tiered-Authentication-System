@@ -3,7 +3,7 @@
 /* ---------------- state ---------------- */
 function fresh(){
   return {
-    mode:'shurokkha', net:'good', webauthn:false,
+    mode:'shurokkha', net:'good', lang:'bn', webauthn:false,
     acct:{registered:false, phone:'01711223344', pinHash:null, paper:[], usedPaper:[]},
     dev:{
       my: {screen:'landing', data:{}, menu:false, key:null, credId:null, active:false, revoked:false, signedIn:false},
@@ -37,4 +37,3 @@ function drawLog(){
   box.scrollTop = box.scrollHeight;
   $('#logCount').textContent = S.log.length;
 }
-
