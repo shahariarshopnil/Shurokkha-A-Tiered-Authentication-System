@@ -30,12 +30,11 @@ function render(){
 }
 function sbar(k){
   const n = netOf(k);
-  const sig = n==='good' ? '▮▮▮▮' : n==='poor' ? '▮▮▯▯' : '✕ নেটওয়ার্ক নেই';
+  const sig = n==='good' ? '▮▮▮▮' : n==='poor' ? '▮▮▯▯' : t('✕ নেটওয়ার্ক নেই', '✕ No network');
   return `<div class="statusbar"><span>${clock()}</span><span>${sig}</span></div>`;
 }
 const shuBar = (d, title, withMenu, back) => `<div class="appbar shu">${SHIELD(20)}<b class="${/[\u0980-\u09FF]/.test(title)?'bnf':''}">${title}</b>${
-  withMenu ? `<button class="menu-btn" data-shu="menu" data-d="${d}" aria-label="মেনু">☰</button>`
-  : back ? `<button class="rt" data-shu="${back}" data-d="${d}">ফিরুন</button>` : ''}</div>`;
-const cue = () => `<div class="cue"><div class="gl">🌿</div><small>আপনার নিরাপত্তা চিহ্ন। এই চিহ্ন না থাকলে অনুরোধটি Shurokkha-র নয়।</small></div>`;
+  withMenu ? `<button class="menu-btn" data-shu="menu" data-d="${d}" aria-label="${t('মেনু','Menu')}">☰</button>`
+  : back ? `<button class="rt" data-shu="${back}" data-d="${d}">${t('ফিরুন','Back')}</button>` : ''}</div>`;
+const cue = () => `<div class="cue"><div class="gl">🌿</div><small>${t('আপনার নিরাপত্তা চিহ্ন। এই চিহ্ন না থাকলে অনুরোধটি Shurokkha-র নয়।', 'Your security glyph. If missing, the request is not from Shurokkha.')}</small></div>`;
 const err = x => x.err ? `<div class="note bad flush">${esc(x.err)}</div>` : '';
-
